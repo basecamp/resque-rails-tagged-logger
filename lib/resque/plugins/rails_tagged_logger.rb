@@ -7,7 +7,7 @@ module Resque
       mattr_accessor :tags
       self.tags ||= :resque
       def around_perform_rails_tagged_logger(*args, &block)
-        Rackstash.with_tags(tags, name, uuid) do
+        Rackstash.tagged(tags, name, uuid) do
           Rails.logger.info "  Parameters: #{args}"
           block.call
         end
